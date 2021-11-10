@@ -1,0 +1,208 @@
+@import 'libs/normalize';
+
+.app {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(100vw - 30px);
+  height: calc(100vh - 100px);
+  transform: translate(-50%, -50%);
+  box-shadow: 1px 2px 20px #f3f3f3;
+  border-radius: 10px;
+  border: 1px solid #f1f1f1;
+  font-size: 14px;
+
+  &__sidelist {
+    padding: 50px 20px;
+    width: 250px;
+    background-color: #e1e1e1;
+  }
+
+  &__tasklist {
+    flex: 1;
+    padding: 10px;
+    overflow: auto;
+  }
+}
+.button {
+  background: #404040;
+  border-radius: 15px;
+  color: #fff;
+  border: 0;
+  padding: 17px 30px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 15px;
+  cursor: pointer;
+
+  &:hover {
+    background: darken(#404040, 7%);
+  }
+  &:active {
+    background: darken(#404040, 17%);
+  }
+}
+
+.field {
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 10px 16px;
+  width: 100%;
+  font-size: 18px;
+  &:focus {
+    border-color: #dddddd;
+  }
+}
+/////////////////////////////////////////////////////////
+////////////////////TASK////////////////////////////////
+////////////////////////////////////////////////////////
+.task {
+  body {
+    background-color: #fafafa;
+  }
+  &__wrappper {
+    background-color: #fff;
+
+    border-radius: 17px;
+  }
+
+  &__header {
+    background-color: #a1c8b0;
+    color: #fff;
+    height: 100px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    h1 {
+      color: #fff;
+      font-size: 34px;
+      font-weight: 700;
+      position: relative;
+      top: 7px;
+      left: 15px;
+    }
+  }
+  &__add-field {
+    height: 85px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eaeaea;
+
+    input {
+      border: 0;
+      background-color: transparent;
+      font-size: 18px;
+      padding: 20px 30px;
+      flex: 1;
+
+      &[type='search']::-webkit-input-placeholder {
+        color: #0000004d;
+      }
+      &[type='search']:-ms-input-placeholder {
+        color: #0000004d;
+      }
+      &[type='search']::-ms-input-placeholder {
+        color: #0000004d;
+      }
+      &[type='search']::placeholder {
+        color: #0000004d;
+      }
+    }
+
+    &-button {
+      border: 0;
+      background-color: transparent;
+      width: 40px;
+      height: 40px;
+      margin: 22px;
+      cursor: pointer;
+
+      svg {
+        position: relative;
+        right: 3px;
+      }
+
+      &:hover {
+        stroke: #8daf99;
+      }
+    }
+  }
+  &__list {
+    &-item {
+      $self: &;
+      display: flex;
+      padding: 20px 30px;
+      border-bottom: 1px solid #eaeaea;
+      justify-content: space-between;
+      align-items: center;
+
+      &--completed {
+        text-decoration: line-through;
+        #{$self}-check,
+        #{$self}-check:hover {
+          background-color: #a1c8b0;
+        }
+      }
+      &-text {
+        flex: 1;
+      }
+      &-date {
+        font-size: 14px;
+        font-weight: 600;
+        span {
+          text-transform: lowercase;
+          font-weight: 500;
+          font-size: 12px;
+          padding-right: 20px;
+        }
+      }
+      &-check {
+        input[type='checkbox'] {
+          opacity: 0;
+        }
+        border: 2px solid #a1c8b0;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        margin-right: 15px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #a1c8b059;
+        }
+      }
+      &-remove:hover {
+        cursor: pointer;
+        svg {
+          path {
+            stroke: #789984;
+          }
+        }
+      }
+      p {
+        font-size: 18px;
+        flex: 1;
+      }
+    }
+  }
+  &-edit {
+    background: #c1c1c1;
+    padding: 10px 20px;
+    &-block {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    &__text {
+      border: none;
+      padding: 17px 30px;
+      height: 50px;
+      border-radius: 15px;
+      font-size: 18px;
+      margin-right: 15px;
+      width: 50%;
+    }
+  }
+}
