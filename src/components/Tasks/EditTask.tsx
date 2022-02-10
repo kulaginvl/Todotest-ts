@@ -11,11 +11,9 @@ interface EditTaskType {
 export const EditTask: FC<EditTaskType> = ({ edTask, opTask, clTask, todo }) => {
   const [term, setTerm] = React.useState('');
 
-  console.log(new Date().toLocaleString());
-
   const handleEdit = () => {
     if (todo && term) {
-      edTask({ ...todo, text: term });
+      edTask({ ...todo, date: new Date().toLocaleString(), text: term });
       clTask();
     }
   };
@@ -30,7 +28,7 @@ export const EditTask: FC<EditTaskType> = ({ edTask, opTask, clTask, todo }) => 
         <div className="task-edit-block">
           <input
             className="task-edit__text"
-            defaultValue={todo?.text || ''}
+            defaultValue={todo.text || ''}
             onChange={handleInput}
           />
           <button className="button" onClick={clTask}>

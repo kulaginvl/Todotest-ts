@@ -1,14 +1,21 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Todo } from '../../redux/types';
 
-interface TaskItemType {
+interface TaskItemProps {
   todo: Todo;
   deleteTask: (id: number) => void;
   onEditTask: (todo: Todo) => void;
   onEditMenu: (todo: Todo) => void;
+  editMenu: boolean;
 }
 
-export const TaskItem: FC<TaskItemType> = ({ deleteTask, todo, onEditTask, onEditMenu }) => {
+export const TaskItem: FC<TaskItemProps> = ({
+  deleteTask,
+  todo,
+  onEditTask,
+  onEditMenu,
+  editMenu,
+}) => {
   const handleDelete = () => {
     todo.id && deleteTask(todo.id);
   };
@@ -17,7 +24,11 @@ export const TaskItem: FC<TaskItemType> = ({ deleteTask, todo, onEditTask, onEdi
     onEditTask({ ...todo, completed: !todo.completed });
   };
   const handleOnEditMenu = () => {
-    onEditMenu(todo);
+    if (editMenu) {
+      alert('Закройте меню редактирования!');
+    } else {
+      onEditMenu(todo);
+    }
   };
 
   return (

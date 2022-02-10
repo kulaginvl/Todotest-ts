@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { AddField } from './components/Tasks/AddField';
 import { EditTask } from './components/Tasks/EditTask';
 import { TaskItem } from './components/Tasks/TaskItem';
+
 import { useTypedSelector } from './hooks/useTypedSelector';
 import { addTodos, deleteTodos, editTodos, fetchTodos } from './redux/store/actions/todo';
 import { Todo } from './redux/types';
@@ -25,7 +27,10 @@ export const App = () => {
 
   const delTask = (id: number) => deleteTodos(id, dispatch);
 
-  const newTask = (todo: Todo) => addTodos(todo, dispatch);
+  const newTask = (todo: Todo) => {
+    addTodos(todo, dispatch);
+    setSelectTask({ text: '', completed: false, date: new Date().toLocaleString() });
+  };
 
   const editTask = (todo: Todo) => editTodos(todo, dispatch);
 
@@ -59,6 +64,7 @@ export const App = () => {
               deleteTask={delTask}
               onEditMenu={handleEditTask}
               onEditTask={editTask}
+              editMenu={edit}
             />
           ))}
           <EditTask edTask={editTask} clTask={closeEditTask} opTask={edit} todo={selectTask} />

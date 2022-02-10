@@ -17,9 +17,12 @@ export const AddField: FC<AddFieldType> = ({ onSubmit, todos }) => {
         completed: false,
         date: new Date().toLocaleString(),
       });
+      setSearchTerm('');
       onSubmit(todo);
+    } else if (searchTerm === '') {
+      alert('Ошибка добавления, вы ничего не написали');
     } else {
-      alert('Ошибка добавления!');
+      alert('Ошибка добавления, повторяющееся значение!');
     }
   };
 
