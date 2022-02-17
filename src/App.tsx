@@ -16,6 +16,7 @@ export const App = () => {
     completed: false,
     date: new Date().toLocaleString(),
   });
+  const [copyText, setCopyText] = React.useState('');
 
   const { todos, loading, error } = useTypedSelector((state) => state.todo);
 
@@ -55,7 +56,14 @@ export const App = () => {
         <h1>Task</h1>
       </div>
       <div className="task__content">
-        <AddField todos={todos} onSubmit={newTask} />
+        <AddField onSubmit={newTask} copyText={copyText} />
+        <EditTask
+          edTask={editTask}
+          clTask={closeEditTask}
+          opTask={edit}
+          todo={selectTask}
+          addCopyText={(text) => setCopyText(text)}
+        />
         <div className="task__list">
           {todos.map((todo) => (
             <TaskItem
@@ -64,10 +72,8 @@ export const App = () => {
               deleteTask={delTask}
               onEditMenu={handleEditTask}
               onEditTask={editTask}
-              editMenu={edit}
             />
           ))}
-          <EditTask edTask={editTask} clTask={closeEditTask} opTask={edit} todo={selectTask} />
         </div>
       </div>
     </div>

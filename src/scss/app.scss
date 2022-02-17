@@ -129,7 +129,9 @@
       }
     }
   }
+
   &__list {
+    overflow: hidden;
     &-item {
       $self: &;
       display: flex;
@@ -146,21 +148,23 @@
         }
       }
       &-text {
-        flex: 1;
+        overflow-wrap: break-word;
+        width: 80%;
       }
       &-date {
+        width: 150px;
         font-size: 14px;
         font-weight: 600;
         span {
           text-transform: lowercase;
           font-weight: 500;
           font-size: 12px;
-          padding-right: 20px;
         }
       }
       &-check {
         input[type='checkbox'] {
           opacity: 0;
+          cursor: pointer;
         }
         border: 2px solid #a1c8b0;
         width: 20px;
@@ -183,13 +187,16 @@
       }
       p {
         font-size: 18px;
-        flex: 1;
       }
     }
   }
   &-edit {
     background: #c1c1c1;
-    padding: 10px 20px;
+    padding: 22px 20px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     &-block {
       display: flex;
       align-items: center;

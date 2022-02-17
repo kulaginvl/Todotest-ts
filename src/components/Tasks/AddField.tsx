@@ -1,17 +1,25 @@
-import React, { FC } from 'react';
-import { Todo, Todos } from '../../redux/types';
+import React, { FC, KeyboardEvent } from 'react';
+import { FormEvent } from 'react';
+import { onKeyEnter } from '../../helpers/onKeyEnter';
+import { Todo } from '../../redux/types';
 
 type AddFieldType = {
-  todos: Todos;
   onSubmit: (todo: Todo) => void;
+  copyText: string;
 };
 
-export const AddField: FC<AddFieldType> = ({ onSubmit, todos }) => {
+export const AddField: FC<AddFieldType> = ({ onSubmit, copyText }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
+  const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+  React.useEffect(() => {
+    setSearchTerm(copyText);
+    inputRef?.current?.scrollIntoView();
+    inputRef?.current?.focus();
+  }, [copyText]);
 
   const addTask = () => {
-    let arrText = todos.map((todo) => todo.text);
-    if (searchTerm !== '' && !arrText.includes(searchTerm)) {
+    if (searchTerm !== '') {
       const todo = new Todo({
         text: searchTerm,
         completed: false,
@@ -19,11 +27,16 @@ export const AddField: FC<AddFieldType> = ({ onSubmit, todos }) => {
       });
       setSearchTerm('');
       onSubmit(todo);
-    } else if (searchTerm === '') {
-      alert('Ошибка добавления, вы ничего не написали');
     } else {
-      alert('Ошибка добавления, повторяющееся значение!');
+      alert('Ошибка добавления, вы ничего не написали');
     }
+  };
+
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    onKeyEnter(e, addTask);
+  };
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
+    setSearchTerm(e.currentTarget.value);
   };
 
   return (
@@ -31,9 +44,9 @@ export const AddField: FC<AddFieldType> = ({ onSubmit, todos }) => {
       <input
         placeholder="Введите текст"
         value={searchTerm}
-        onChange={(e) => {
-          setSearchTerm(e.currentTarget.value);
-        }}
+        onChange={handleChange}
+        onKeyUp={handleKeyUp}
+        ref={inputRef}
       />
       <button onClick={addTask} className="task__add-field-button">
         <svg

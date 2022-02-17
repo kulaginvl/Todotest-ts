@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import { Todo } from '../../redux/types';
 
 interface TaskItemProps {
@@ -6,16 +7,9 @@ interface TaskItemProps {
   deleteTask: (id: number) => void;
   onEditTask: (todo: Todo) => void;
   onEditMenu: (todo: Todo) => void;
-  editMenu: boolean;
 }
 
-export const TaskItem: FC<TaskItemProps> = ({
-  deleteTask,
-  todo,
-  onEditTask,
-  onEditMenu,
-  editMenu,
-}) => {
+export const TaskItem: FC<TaskItemProps> = ({ deleteTask, todo, onEditTask, onEditMenu }) => {
   const handleDelete = () => {
     todo.id && deleteTask(todo.id);
   };
@@ -23,18 +17,17 @@ export const TaskItem: FC<TaskItemProps> = ({
   const handleEdit = () => {
     onEditTask({ ...todo, completed: !todo.completed });
   };
+
   const handleOnEditMenu = () => {
-    if (editMenu) {
-      alert('Закройте меню редактирования!');
-    } else {
-      onEditMenu(todo);
-    }
+    onEditMenu(todo);
   };
 
   return (
     <div className={`task__list-item  ${todo.completed ? 'task__list-item--completed' : ''}`}>
-      <div className="task__list-item-check">
-        <input onChange={handleEdit} type="checkbox" checked={todo.completed} />
+      <div className="task__list-item-flex">
+        <div className="task__list-item-check">
+          <input onChange={handleEdit} type="checkbox" checked={todo.completed} />
+        </div>
       </div>
       <div onClick={handleOnEditMenu} className="task__list-item-text">
         <p>{todo.text}</p>

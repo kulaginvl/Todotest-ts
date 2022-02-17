@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, KeyboardEvent } from 'react';
+import { onKeyEnter } from '../../helpers/onKeyEnter';
 import { Todo } from '../../redux/types';
 
 interface EditTaskType {
@@ -6,10 +7,15 @@ interface EditTaskType {
   opTask: boolean;
   edTask: (todo: Todo) => void;
   clTask: () => void;
+  addCopyText: (text: string) => void;
 }
 
-export const EditTask: FC<EditTaskType> = ({ edTask, opTask, clTask, todo }) => {
+export const EditTask: FC<EditTaskType> = ({ edTask, opTask, clTask, todo, addCopyText }) => {
   const [term, setTerm] = React.useState('');
+
+  React.useEffect(() => {
+    setTerm(todo.text);
+  }, [todo]);
 
   const handleEdit = () => {
     if (todo && term) {
@@ -22,23 +28,37 @@ export const EditTask: FC<EditTaskType> = ({ edTask, opTask, clTask, todo }) => 
     setTerm(e.currentTarget.value);
   };
 
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    onKeyEnter(e, handleEdit);
+  };
+  const handleCopyText = () => {
+    addCopyText(term);
+    clTask();
+  };
+
   return (
-    <div className="task-edit">
+    <>
       {opTask && (
-        <div className="task-edit-block">
-          <input
-            className="task-edit__text"
-            defaultValue={todo.text || ''}
-            onChange={handleInput}
-          />
-          <button className="button" onClick={clTask}>
-            close
-          </button>
-          <button className="button" onClick={handleEdit}>
-            save
-          </button>
+        <div className="task-edit">
+          <div className="task-edit-block">
+            <input
+              className="task-edit__text"
+              value={term}
+              onChange={handleInput}
+              onKeyUp={handleKeyUp}
+            />
+            <button className="button" onClick={clTask}>
+              close
+            </button>
+            <button className="button" onClick={handleEdit}>
+              save
+            </button>
+            <button className="button" onClick={handleCopyText}>
+              copy
+            </button>
+          </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
